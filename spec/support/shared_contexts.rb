@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+require_relative 'shared_contexts/private_similar_contexts_context'
+require_relative 'shared_contexts/public_similar_contexts_context'
