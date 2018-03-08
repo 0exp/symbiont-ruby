@@ -1,14 +1,28 @@
-require "bundler/setup"
-require "symbiont/ruby"
+# frozen_string_literal: true
+
+require 'simplecov'
+require 'simplecov-json'
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  SimpleCov::Formatter::JSONFormatter,
+  Coveralls::SimpleCov::Formatter
+])
+
+SimpleCov.start { add_filter 'spec' }
+
+require 'bundler/setup'
+require 'symbiont'
+require 'pry'
+
+require_relative 'support/spec_support'
+require_relative 'support/shared_contexts'
 
 RSpec.configure do |config|
-  # Enable flags like --only-failures and --next-failure
-  config.example_status_persistence_file_path = ".rspec_status"
+  config.order = :random
+  config.expect_with(:rspec) { |c| c.syntax = :expect }
 
-  # Disable RSpec exposing methods globally on `Module` and `main`
-  config.disable_monkey_patching!
-
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
+  config.include SpecSupport::FakeDataGenerator
+  config.extend  SpecSupport::FakeDataGenerator
 end
