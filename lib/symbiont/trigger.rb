@@ -23,7 +23,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api public
   # @since 0.1.0
-  IOK = %i[__inner_context__ __outer_context__ __kernel_context__].freeze
+  IOK = %i[__inner_contexts__ __outer_context__ __kernel_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: outer context => initial context => kernel context.
@@ -32,7 +32,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api public
   # @since 0.1.0
-  OIK = %i[__outer_context__ __inner_context__ __kernel_context__].freeze
+  OIK = %i[__outer_context__ __inner_contexts__ __kernel_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: outer context => kernel context => initial context.
@@ -41,7 +41,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api public
   # @since 0.1.0
-  OKI = %i[__outer_context__ __kernel_context__ __inner_context__].freeze
+  OKI = %i[__outer_context__ __kernel_context__ __inner_contexts__].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: initial context => kernel context => outer context.
@@ -50,7 +50,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api public
   # @since 0.1.0
-  IKO = %i[__inner_context__ __kernel_context__ __outer_context__].freeze
+  IKO = %i[__inner_contexts__ __kernel_context__ __outer_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: kernel context => outer context => initial context.
@@ -59,7 +59,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api public
   # @since 0.1.0
-  KOI = %i[__kernel_context__ __outer_context__ __inner_context__].freeze
+  KOI = %i[__kernel_context__ __outer_context__ __inner_contexts__].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: kernel context => initial context => outer context.
@@ -68,13 +68,7 @@ class Symbiont::Trigger < BasicObject
   #
   # api public
   # @since 0.1.0
-  KIO = %i[__kernel_context__ __inner_context__ __outer_context__].freeze
-
-  # Is raised when closure (__outer_context__ instance attribute) isnt a Proc.
-  #
-  # @api public
-  # @since 0.1.0
-  IncompatibleclosureObjectError = ::Class.new(::ArgumentError)
+  KIO = %i[__kernel_context__ __inner_contexts__ __outer_context__].freeze
 
   # Is raised when chosen direction (__context_direction__ instance attribute) is not supported
   # by a trigger. Supports only: OIK, OKI, IOK, IKO, KOI, KIO.
@@ -82,6 +76,12 @@ class Symbiont::Trigger < BasicObject
   # @api public
   # @since 0.1.0
   IncompatibleContextDirectionError = ::Class.new(::ArgumentError)
+
+  # Is raised when closure (__outer_context__ instance attribute) isnt passed.
+  #
+  # @api public
+  # @since 0.2.0
+  UnprovidedClosureAttributeError = ::Class.new(::ArgumentError)
 
   # Is raised when no one is able to respond to the required method.
   #
@@ -97,7 +97,7 @@ class Symbiont::Trigger < BasicObject
   # @return [Object]
   #
   # @since 0.1.0
-  attr_reader :__inner_context__
+  attr_reader :__inner_contexts__
 
   # Returns a binding object of corresponding closure (see __closure__).
   # Used as an outer context for context method resolving algorithm.
@@ -142,17 +142,17 @@ class Symbiont::Trigger < BasicObject
   # @param closure [Proc]
   #   closure that will be executed in a set of contexts (initial => outer => kernel by default).
   #   An actual context (#__actual_context__) will be passed to a closure as an attribute.
-  # @raise IncompatibleclosureObjectError
-  #   Raises when received closure attribte isnt a Proc.
+  # @raise UnprovidedClosureAttributeError
+  #   Raises when received closure attribte isnt passed.
   # @raise IncompatibleContextDirectionError
   #   Is raised when chosen direction is not supported by a trigger.
   #   Supports only OIK, OKI, IOK, IKO, KOI, KIO (see corresponding constant value above).
   #
   # @api private
   # @since 0.1.0
-  def initialize(initial_context, closure, context_direction = IOK)
-    unless closure.is_a?(::Proc)
-      ::Kernel.raise(IncompatibleclosureObjectError, 'closure attribute should be a proc')
+  def initialize(*initial_contexts, context_direction: IOK, &closure)
+    unless ::Kernel.block_given?
+      ::Kernel.raise(UnprovidedClosureAttributeError, 'block attribute should be provided')
     end
 
     # rubocop:disable Layout/SpaceAroundKeyword
@@ -168,7 +168,7 @@ class Symbiont::Trigger < BasicObject
 
     @__closure__           = closure
     @__context_direction__ = context_direction
-    @__inner_context__     = initial_context
+    @__inner_contexts__    = initial_contexts
     @__outer_context__     = ::Kernel.eval('self', closure.binding)
     @__kernel_context__    = ::Kernel
   end
@@ -194,7 +194,7 @@ class Symbiont::Trigger < BasicObject
   # @api private
   # @since 0.1.0
   def __directed_contexts__
-    __context_direction__.map { |direction| __send__(direction) }
+    __context_direction__.map { |direction| __send__(direction) }.flatten
   end
 
   # Returns the first context that is able to respond to the required method.

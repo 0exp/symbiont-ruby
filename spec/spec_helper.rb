@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.order = :random
   config.expect_with(:rspec) { |c| c.syntax = :expect }
 
+  config.include SpecSupport::SymbiontHelpers
   config.include SpecSupport::FakeDataGenerator
   config.extend  SpecSupport::FakeDataGenerator
 end

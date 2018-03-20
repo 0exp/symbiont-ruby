@@ -20,20 +20,20 @@ module Symbiont
     # rubocop:disable Naming/MethodName, Metrics/LineLength
     def Context(default_context_direction = Trigger::IOK)
       Module.new do
-        define_method :evaluate do |context_direction = default_context_direction, &closure|
-          Executor.evaluate(self, context_direction, &closure)
+        define_method :evaluate do |context_direction: default_context_direction, &closure|
+          Executor.evaluate(self, context_direction: context_direction, &closure)
         end
 
-        define_method :evaluate_private do |context_direction = default_context_direction, &closure|
-          Executor.evaluate_private(self, context_direction, &closure)
+        define_method :evaluate_private do |context_direction: default_context_direction, &closure|
+          Executor.evaluate_private(self, context_direction: context_direction, &closure)
         end
 
-        define_method :public_method do |method_name, context_direction = default_context_direction, &closure|
-          Executor.public_method(self, method_name, context_direction, &closure)
+        define_method :public_method do |method_name, context_direction: default_context_direction, &closure|
+          Executor.public_method(self, method_name, context_direction: context_direction, &closure)
         end
 
-        define_method :private_method do |method_name, context_direction = default_context_direction, &closure|
-          Executor.private_method(self, method_name, context_direction, &closure)
+        define_method :private_method do |method_name, context_direction: default_context_direction, &closure|
+          Executor.private_method(self, method_name, context_direction: context_direction, &closure)
         end
       end
     end

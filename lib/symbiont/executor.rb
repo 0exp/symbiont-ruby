@@ -20,8 +20,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def evaluate(required_context, context_direction = Trigger::IOK, &closure)
-        public_trigger(required_context, context_direction, &closure).__evaluate__
+      def evaluate(*required_contexts, context_direction: Trigger::IOK, &closure)
+        public_trigger(*required_contexts, context_direction: context_direction, &closure).__evaluate__
       end
 
       # Starts execution of a proc object in the context of the passed object with the selected
@@ -36,8 +36,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def evaluate_private(required_context, context_direction = Trigger::IOK, &closure)
-        private_trigger(required_context, context_direction, &closure).__evaluate__
+      def evaluate_private(*required_contexts, context_direction: Trigger::IOK, &closure)
+        private_trigger(*required_contexts, context_direction: context_direction, &closure).__evaluate__
       end
 
       # Factory method that instantiates a public trigger with the desired execution context,
@@ -52,8 +52,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def public_trigger(required_context, context_direction = Trigger::IOK, &closure)
-        PublicTrigger.new(required_context, closure, context_direction)
+      def public_trigger(*required_contexts, context_direction: Trigger::IOK, &closure)
+        PublicTrigger.new(*required_contexts, context_direction: context_direction, &closure)
       end
 
       # Factory method that instantiates a private trigger with the desired execution context,
@@ -69,8 +69,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def private_trigger(required_context, context_direction = Trigger::IOK, &closure)
-        PrivateTrigger.new(required_context, closure, context_direction)
+      def private_trigger(*required_contexts, context_direction: Trigger::IOK, &closure)
+        PrivateTrigger.new(*required_contexts, context_direction: context_direction, &closure)
       end
 
       # Gets the method object taken from the context that can respond to it.
@@ -86,8 +86,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def public_method(method_name, required_context, context_direction = Trigger::IOK, &closure)
-        public_trigger(required_context, context_direction, &closure).method(method_name)
+      def public_method(method_name, *required_contexts, context_direction: Trigger::IOK, &closure)
+        public_trigger(*required_contexts, context_direction: context_direction, &closure).method(method_name)
       end
 
       # Gets the method object taken from the context that can respond to it.
@@ -103,8 +103,8 @@ module Symbiont
       #
       # @api public
       # @since 0.1.0
-      def private_method(method_name, required_context, context_direction = Trigger::IOK, &closure)
-        private_trigger(required_context, context_direction, &closure).method(method_name)
+      def private_method(method_name, *required_contexts, context_direction: Trigger::IOK, &closure)
+        private_trigger(*required_contexts, context_direction: context_direction, &closure).method(method_name)
       end
     end
   end
