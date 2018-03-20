@@ -17,7 +17,7 @@ module Symbiont
     # @api public
     # @since 0.1.0
     #
-    # rubocop:disable Naming/MethodName, Metrics/LineLength
+    # rubocop:disable Naming/MethodName
     def Context(default_context_direction = Trigger::IOK)
       Module.new do
         define_method :evaluate do |context_direction: default_context_direction, &closure|
@@ -37,7 +37,7 @@ module Symbiont
         end
       end
     end
-    # rubocop:enable Naming/MethodName, Metrics/LineLength
+    # rubocop:enable Naming/MethodName
   end
 
   # @see Symbiont.Context
