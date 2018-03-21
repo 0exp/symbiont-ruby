@@ -39,6 +39,9 @@ Style/Documentation:
 Style/ClassAndModuleChildren:
   Enabled: false
 
+Style/IfUnlessModifier:
+  Enabled: false
+
 Style/EmptyCaseCondition:
   Enabled: false
 
@@ -52,6 +55,9 @@ Style/ParallelAssignment:
   Enabled: false
 
 Style/CommentedKeyword:
+  Enabled: false
+
+Lint/HandleExceptions:
   Enabled: false
 
 Layout/IndentArray:
@@ -70,7 +76,7 @@ Naming/VariableNumber:
   EnforcedStyle: snake_case
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120
 
 Metrics/BlockLength:
   Exclude:

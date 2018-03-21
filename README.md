@@ -1,4 +1,12 @@
-# Symbiont &middot; [![Gem Version](https://badge.fury.io/rb/symbiont-ruby.svg)](https://badge.fury.io/rb/symbiont-ruby) [![Build Status](https://travis-ci.org/0exp/symbiont-ruby.svg?branch=master)](https://travis-ci.org/0exp/symbiont-ruby) [![Coverage Status](https://coveralls.io/repos/github/0exp/symbiont-ruby/badge.svg?branch=master)](https://coveralls.io/github/0exp/symbiont-ruby?branch=master)
+<p align="center"><img width="250" height="250" src="logo/symbiont_logo_circle.png" /></div>
+<p align="center">
+  <h1 align="center">
+    Symbiont<br />
+    <a href="https://badge.fury.io/rb/symbiont-ruby"><img src="https://badge.fury.io/rb/symbiont-ruby.svg"></a>
+    <a href="https://travis-ci.org/0exp/symbiont-ruby"><img src="https://travis-ci.org/0exp/symbiont-ruby.svg?branch=master"></a>
+    <a href="https://coveralls.io/github/0exp/symbiont-ruby?branch=master"><img src="https://coveralls.io/repos/github/0exp/symbiont-ruby/badge.svg?branch=master"></a>
+  </h1>
+</p>
 
 **Symbiont** is a cool implementation of proc-objects execution algorithm: in the context of other object,
 but with the preservation of the closed environment of the proc object and with the ability of control the method dispatch
@@ -46,6 +54,7 @@ require 'symbiont'
   - [Symbiont Mixin](#symbiont-mixin)
     - [Mixing a module with default delegation direction](#mixing-a-module-with-default-delegation-direction)
     - [Mixing a module with certain delegation direction](#mixing-a-module-with-certain-delegation-direction)
+  - [Multiple inner contexts](#multiple-inner-contexts)
 
 # Problems and motivaiton
 
@@ -193,15 +202,15 @@ Symbiont::KIO # Kernel Context => Inner Context  => Outer Context
 `Symbiont::Executor` allows you to execute proc objects in two modes of the delegation:
 
 - only public methods:
-  - `evaluate(required_context, [context_direction], &closure)`
+  - `evaluate(*required_contexts, [context_direction:], &closure)`
 - public and private methods:
-  - `evaluate_private(required_context, [context_direction], &closure)`
+  - `evaluate_private(*required_contexts, [context_direction:], &closure)`
 
 If no context is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is thrown.
 
 In the case when an unsupported direction value is used - `Symbiont::Trigger::IncompatibleContextDirectionError` exception is thrown.
 
-If proc object isnt passed to the executor - `Symbiont::Trigger::IncompatibleclosureObjectError` exception is thrown.
+If proc object isnt passed to the executor - `Symbiont::Trigger::UnprovidedClosureAttributeError` exception is thrown.
 
 #### Considering public methods only (.evaluate)
 
@@ -213,13 +222,13 @@ end
 # => "Data: inner_context"
 
 # with a custom delegation order
-Symbiont::Executor.evaluate(object, Symbiont::KIO) do
+Symbiont::Executor.evaluate(object, context_direction: Symbiont::KIO) do
   format_data(object_data)
 end
 # => "Data: kernel_context"
 
 # SimpleObject#object_data is a private method (inner_context)
-Symbiont::Executor.evaluate(object, Symbiont::IOK) do
+Symbiont::Executor.evaluate(object, context_direction: Symbiont::IOK) do
   format_data(object_data)
 end
 # => "Data: outer_context"
@@ -235,13 +244,13 @@ end
 # => "Data: inner_context"
 
 # with a custom delegation order
-Symbiont::Executor.evaluate_private(object, Symbiont::KIO) do
+Symbiont::Executor.evaluate_private(object, context_direction: Symbiont::KIO) do
   format_data(object_data)
 end
 # => "Data: kernel_context"
 
 # SimpleObject#object_data is a private method (inner_context)
-Symbiont::Executor.evaluate_private(object, Symbiont::IOK) do
+Symbiont::Executor.evaluate_private(object, context_direction: Symbiont::IOK) do
   format_data(object_data)
 end
 # => "Data: inner_data"
@@ -252,9 +261,9 @@ end
 `Symbiont::Executor` provides the possibility of obtaining the method object with consideration of the chosen delegation order:
 
 - only public methods:
-  - `public_method(method_name, required_context, [context_direction], &clojure)`
+  - `public_method(method_name, *required_contexts, [context_direction:], &clojure)`
 - public and private methods:
-  - `private_method(method_name, required_context, [context_direction], &clojure)`
+  - `private_method(method_name, *required_contexts, [context_direction:], &clojure)`
 
 If no context is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is thrown.
 
@@ -268,11 +277,11 @@ Symbiont::Executor.public_method(:object_data, object, &closure)
 # => #<Method: SimpleObject#object_data>
 
 # with a custom delegation order
-Symbiont::Executor.public_method(:object_data, object, Symbiont::OIK, &closure)
+Symbiont::Executor.public_method(:object_data, object, context_direction: Symbiont::OIK, &closure)
 # => (main) #<Method: SimpleObject(object)#object_data>
 
 # SimpleObject#object_data is a private method
-Symbiont::Executor.public_method(:object_data, object, Symbiont::IOK, &closure)
+Symbiont::Executor.public_method(:object_data, object, context_direction: Symbiont::IOK, &closure)
 # => (main) #<Method: SimpleObject(object)#object_data>
 ```
 
@@ -284,17 +293,17 @@ Symbiont::Executor.private_method(:object_data, object, &clojure)
 # => #<Method: SimpleObject#object_data>
 
 # with a custom delegation order
-Symbiont::Executor.private_method(:object_data, object, Symbiont::KIO, &clojure)
+Symbiont::Executor.private_method(:object_data, object, context_direction: Symbiont::KIO, &clojure)
 # => #<Method: Kernel.object_data>
 
 # SimpleObject#object_data is a private_method
-Symbiont::Executor.private_method(:object_data, object, Symbiotn::IKO, &clojure)
+Symbiont::Executor.private_method(:object_data, object, context_direction: Symbiotn::IKO, &clojure)
 # => #<Method: SimpleObject#object_data>
 ```
 
 ## Symbiont Mixin
 
-'Symbiont:: Context' is a mixin that allows any object to call proc objects in the context of itself as Symbiont::Executor
+`Symbiont::Context` is a mixin that allows any object to call proc objects in the context of itself as `Symbiont::Executor`.
 
 You can specify the default direction of the context delegation. `Symbiont::IOK` is used by default.
 
@@ -354,6 +363,33 @@ SimpleObject.new.evaluate(Symbiont::IOK) { object_data }
 # => object.object_data => "inner_context"
 ```
 
+## Multiple inner contexts
+
+
+`Symbiont::Executor` allows you to work with multiple inner contexts (can receive a set of objects instead of the one main object).
+Each object will be used as an inner context in order they are passed.
+The method will be addressed to the object that responds first (in accordance with a chosen delegation order).
+
+```ruby
+# Usage:
+
+Symbiont::Executor.evaluate(object_a, object_b, context_direction: Symbiont::IOK, &closure)
+Symbiont::Executor.evaluate_private(object_a, object_b, context_direction: Symbiont::IOK, &closure)
+Symbiont::Executor.publc_method(:method_name, object_a, object_b, context_direction: Symbiont::IOK, &closure)
+Symbiont::Executor.private_method(:method_name, object_a, object_b, context_direction: Symbiont::IOK, &closure)
+
+# Example
+
+object_a.info # => "object_info"
+object_b.data # => "object_data"
+
+closure = proc { "#{info} #{data}" }
+
+Symbiont::Executor.evaluate(object_a, object_b, &closure) # => "object_info object_data"
+Symbiont::Executor.public_method(:data, object_a, object_b, &closure).call # => "object_data"
+Symbiont::Executor.public_method(:info, object_a, object_b, &closure).call # => "object_info"
+```
+
 # Contributing
 
 - Fork it ( https://github.com/0exp/symbiont-ruby/fork )
@@ -366,6 +402,9 @@ SimpleObject.new.evaluate(Symbiont::IOK) { object_data }
 
 Released under MIT License.
 
-# About
+# Authors
 
-Created by Rustam Ibragimov.
+[Logo](https://github.com/0exp/symbiont-ruby/tree/master/logo) was created by **Viktoria Karaulova** (my special thanks ^_^).
+
+Project was created by **Rustam Ibragimov**.
+

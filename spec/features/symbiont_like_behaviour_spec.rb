@@ -44,7 +44,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         expect(Symbiont::Executor).to(
           receive(:evaluate).with(
             instance_object,
-            symbiont_direction
+            context_direction: symbiont_direction
           )
         )
 
@@ -55,13 +55,13 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'instance#evaluate_private provides an ability to use any direction' do
       symbiont_directions.each do |symbiont_direction|
         expect(Symbiont::Executor).to(
-          receive(:evaluate).with(
+          receive(:evaluate_private).with(
             instance_object,
-            symbiont_direction
+            context_direction: symbiont_direction
           )
         )
 
-        instance_object.evaluate(symbiont_direction)
+        instance_object.evaluate_private(symbiont_direction)
       end
     end
 
@@ -70,7 +70,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         expect(Symbiont::Executor).to(
           receive(:evaluate).with(
             module_object,
-            symbiont_direction
+            context_direction: symbiont_direction
           )
         )
 
@@ -81,13 +81,13 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate_private provides an ability to use any direction' do
       symbiont_directions.each do |symbiont_direction|
         expect(Symbiont::Executor).to(
-          receive(:evaluate).with(
+          receive(:evaluate_private).with(
             module_object,
-            symbiont_direction
+            context_direction: symbiont_direction
           )
         )
 
-        module_object.evaluate(symbiont_direction)
+        module_object.evaluate_private(symbiont_direction)
       end
     end
   end
@@ -104,7 +104,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       expect(Symbiont::Executor).to(
         receive(:evaluate).with(
           instance_object,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -114,7 +114,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'instance#evaluate => fails when proc isnt passed' do
       expect do
         instance_object.evaluate
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate_private => invokes private evaluator ' \
@@ -123,7 +123,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       expect(Symbiont::Executor).to(
         receive(:evaluate_private).with(
           instance_object,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -133,7 +133,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'instnace#evaluate_private => fails when proc isnt passed' do
       expect do
         instance_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate => invokes public evaluator ' \
@@ -142,7 +142,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       expect(Symbiont::Executor).to(
         receive(:evaluate).with(
           module_object,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -152,7 +152,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate => fails when proc isnt passed' do
       expect do
         module_object.evaluate
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate_private => invokes private evaluator ' \
@@ -161,7 +161,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       expect(Symbiont::Executor).to(
         receive(:evaluate).with(
           module_object,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -171,7 +171,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate_private => fails when proc isnt passed' do
       expect do
         module_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'module#public_method => resolves corresponding method ' \
@@ -182,7 +182,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         receive(:public_method).with(
           module_object,
           corresponding_method,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -197,7 +197,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         receive(:private_method).with(
           module_object,
           corresponding_method,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -212,7 +212,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         receive(:public_method).with(
           instance_object,
           corresponding_method,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -227,7 +227,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         receive(:private_method).with(
           instance_object,
           corresponding_method,
-          symbiont_direction
+          context_direction: symbiont_direction
         )
       )
 
@@ -242,47 +242,47 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     include_examples 'symbiont direction option'
 
     specify 'isntance#evaluate without direction uses Symbiont::IOK by default' do
-      expect(Symbiont::Executor).to receive(:evaluate).with(instance_object, Symbiont::IOK)
+      expect(Symbiont::Executor).to receive(:evaluate).with(instance_object, context_direction: Symbiont::IOK)
       instance_object.evaluate {}
     end
 
     specify 'instance#evaluate_private without direction uses Symbiont::IOK by default' do
-      expect(Symbiont::Executor).to receive(:evaluate_private).with(instance_object, Symbiont::IOK)
+      expect(Symbiont::Executor).to receive(:evaluate_private).with(instance_object, context_direction: Symbiont::IOK)
       instance_object.evaluate_private {}
     end
 
     specify 'module#evaluate without direction uses Symbiont::IOK by default' do
-      expect(Symbiont::Executor).to receive(:evaluate).with(module_object, Symbiont::IOK)
+      expect(Symbiont::Executor).to receive(:evaluate).with(module_object, context_direction: Symbiont::IOK)
       module_object.evaluate {}
     end
 
     specify 'module#evaluate_private without direction uses Symbiont::IOK by default' do
-      expect(Symbiont::Executor).to receive(:evaluate_private).with(module_object, Symbiont::IOK)
+      expect(Symbiont::Executor).to receive(:evaluate_private).with(module_object, context_direction: Symbiont::IOK)
       module_object.evaluate_private {}
     end
 
     specify 'module#evaluate fails when proc isnt possed' do
       expect do
         instance_object.evaluate
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate_private fails when proc isnt possed' do
       expect do
         instance_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate fails when proc isnt possed' do
       expect do
         module_object.evaluate
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate_private fails when proc isnt possed' do
       expect do
         module_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::IncompatibleclosureObjectError)
+      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
     end
   end
 
