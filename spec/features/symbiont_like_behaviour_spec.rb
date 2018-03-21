@@ -17,25 +17,25 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
   shared_examples 'symbiont direction option' do
     specify 'instance#evaluate fails on incompatible direction option' do
       expect do
-        instance_object.evaluate(context_direction: gen_symb) {}
+        instance_object.evaluate(gen_symb) {}
       end.to raise_error(Symbiont::Trigger::IncompatibleContextDirectionError)
     end
 
     specify 'instance#evaluate_private fails on incompatible direction option' do
       expect do
-        instance_object.evaluate(context_direction: gen_symb) {}
+        instance_object.evaluate(gen_symb) {}
       end.to raise_error(Symbiont::Trigger::IncompatibleContextDirectionError)
     end
 
     specify 'module#evaluate fails on incompatible direction option' do
       expect do
-        instance_object.evaluate(context_direction: gen_symb) {}
+        instance_object.evaluate(gen_symb) {}
       end.to raise_error(Symbiont::Trigger::IncompatibleContextDirectionError)
     end
 
     specify 'module#evaluate_private fails on incompatible direction option' do
       expect do
-        instance_object.evaluate(context_direction: gen_symb) {}
+        instance_object.evaluate(gen_symb) {}
       end.to raise_error(Symbiont::Trigger::IncompatibleContextDirectionError)
     end
 
@@ -48,7 +48,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
           )
         )
 
-        instance_object.evaluate(context_direction: symbiont_direction)
+        instance_object.evaluate(symbiont_direction)
       end
     end
 
@@ -61,7 +61,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
           )
         )
 
-        instance_object.evaluate_private(context_direction: symbiont_direction)
+        instance_object.evaluate_private(symbiont_direction)
       end
     end
 
@@ -74,7 +74,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
           )
         )
 
-        module_object.evaluate(context_direction: symbiont_direction)
+        module_object.evaluate(symbiont_direction)
       end
     end
 
@@ -87,7 +87,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
           )
         )
 
-        module_object.evaluate_private(context_direction: symbiont_direction)
+        module_object.evaluate_private(symbiont_direction)
       end
     end
   end
@@ -186,7 +186,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         )
       )
 
-      module_object.public_method(corresponding_method, context_direction: symbiont_direction) {}
+      module_object.public_method(corresponding_method, symbiont_direction) {}
     end
 
     specify 'module#private_method => resolves corresponding method ' \
@@ -201,7 +201,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         )
       )
 
-      module_object.private_method(corresponding_method, context_direction: symbiont_direction) {}
+      module_object.private_method(corresponding_method, symbiont_direction) {}
     end
 
     specify 'instance#public_method => resolves corresponding method ' \
@@ -216,7 +216,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         )
       )
 
-      instance_object.public_method(corresponding_method, context_direction: symbiont_direction) {}
+      instance_object.public_method(corresponding_method, symbiont_direction) {}
     end
 
     specify 'instance#private_method => resolves corresponding method ' \
@@ -231,7 +231,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
         )
       )
 
-      instance_object.private_method(corresponding_method, context_direction: symbiont_direction) {}
+      instance_object.private_method(corresponding_method, symbiont_direction) {}
     end
   end
 

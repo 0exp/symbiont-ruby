@@ -7,7 +7,7 @@
 # Trigger supports 3 contexts:
 #
 # * closure context;
-# * passed object's context;
+# * passed object's context (or context of the each passed object);
 # * global ::Kernel context.
 #
 # If no context is able to respond to the required method - ContextNoMethodError exception is raised
@@ -26,7 +26,7 @@ class Symbiont::Trigger < BasicObject
   IOK = %i[__inner_contexts__ __outer_context__ __kernel_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
-  # Direction: outer context => initial context => kernel context.
+  # Direction: outer context => initial contexts => kernel context.
   #
   # @return [Array<Symbol>]
   #
@@ -35,7 +35,7 @@ class Symbiont::Trigger < BasicObject
   OIK = %i[__outer_context__ __inner_contexts__ __kernel_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
-  # Direction: outer context => kernel context => initial context.
+  # Direction: outer context => kernel context => initial contexts.
   #
   # @return [Array<Symbol>]
   #
@@ -44,7 +44,7 @@ class Symbiont::Trigger < BasicObject
   OKI = %i[__outer_context__ __kernel_context__ __inner_contexts__].freeze
 
   # Indicates the direction of context method resolving algorithm.
-  # Direction: initial context => kernel context => outer context.
+  # Direction: initial contexts => kernel context => outer context.
   #
   # @return [Array<Symbol>]
   #
@@ -53,7 +53,7 @@ class Symbiont::Trigger < BasicObject
   IKO = %i[__inner_contexts__ __kernel_context__ __outer_context__].freeze
 
   # Indicates the direction of context method resolving algorithm.
-  # Direction: kernel context => outer context => initial context.
+  # Direction: kernel context => outer context => initial contexts.
   #
   # @return [Array<Symbol>]
   #
@@ -62,7 +62,7 @@ class Symbiont::Trigger < BasicObject
   KOI = %i[__kernel_context__ __outer_context__ __inner_contexts__].freeze
 
   # Indicates the direction of context method resolving algorithm.
-  # Direction: kernel context => initial context => outer context.
+  # Direction: kernel context => initial contexts => outer context.
   #
   # @return [Array<Symbol>]
   #
@@ -77,7 +77,7 @@ class Symbiont::Trigger < BasicObject
   # @since 0.1.0
   IncompatibleContextDirectionError = ::Class.new(::ArgumentError)
 
-  # Is raised when closure (__outer_context__ instance attribute) isnt passed.
+  # Is raised when closure isnt passed.
   #
   # @api public
   # @since 0.2.0
@@ -91,10 +91,11 @@ class Symbiont::Trigger < BasicObject
   # @since 0.1.0
   ContextNoMethodError = ::Class.new(::NoMethodError)
 
-  # Returns an object that should be used as the main context for
-  # context method resolving algorithm.
+  # Returns a set of objects that should be used as the main context series for
+  # context method resolving algorithm. The order of object selection depends on
+  # their order in a set.
   #
-  # @return [Object]
+  # @return [Array<Object>]
   #
   # @since 0.1.0
   attr_reader :__inner_contexts__
@@ -125,7 +126,7 @@ class Symbiont::Trigger < BasicObject
   # @since 0.1.0
   attr_reader :__closure__
 
-  # Returns an array of symbols tha represents the direction of contexts.
+  # Returns an array of symbols that represents the direction of contexts.
   # that represents an access method to each of them.
   #
   # @return [Array<Symbol>]
@@ -134,16 +135,17 @@ class Symbiont::Trigger < BasicObject
   # @since 0.1.0
   attr_reader :__context_direction__
 
-  # Instantiates trigger object with corresponding initial context, closure and context resolving
+  # Instantiates trigger object with corresponding initial contexts, closure and context resolving
   # direction.
   #
-  # @param initial_context [Object]
-  #   Main context which should be used for instance_eval on.
+  # @param initial_contexts [Array<Object>]
+  #   A set of main context objects which should be used for instance_eval on.
+  #   An order of object selection depends on oredr which they are passed.
   # @param closure [Proc]
   #   closure that will be executed in a set of contexts (initial => outer => kernel by default).
   #   An actual context (#__actual_context__) will be passed to a closure as an attribute.
   # @raise UnprovidedClosureAttributeError
-  #   Raises when received closure attribte isnt passed.
+  #   Raises when closure attribte isnt passed.
   # @raise IncompatibleContextDirectionError
   #   Is raised when chosen direction is not supported by a trigger.
   #   Supports only OIK, OKI, IOK, IKO, KOI, KIO (see corresponding constant value above).
@@ -186,6 +188,7 @@ class Symbiont::Trigger < BasicObject
   end
 
   # Returns a collection of the all contexts sorted by chosen direction.
+  # Represents ordered single-dimentional array of objects (contexts).
   #
   # @return [Array<Object>]
   #
@@ -204,7 +207,7 @@ class Symbiont::Trigger < BasicObject
   # Basicaly, abstract implementation raises NoMethodError.
   #
   # @param method_name [Symbol,String] Method that a context should respond to.
-  # @raise NoMethodError
+  # @raise ContextNoMethodError
   #
   # @see #__context_direction__
   #
@@ -219,7 +222,7 @@ class Symbiont::Trigger < BasicObject
   # @param method_name [String,Symbol] Method name
   # @param arguments [Mixed] Method arguments
   # @param block [Proc] Block
-  # @raise NoMethodError
+  # @raise ContextNoMethodError
   #   Is rased when no one of the contexts are able to respond tothe required method.
   # @return void
   #
@@ -253,7 +256,7 @@ class Symbiont::Trigger < BasicObject
   # Returns a corresponding metehod object of the actual context.
   #
   # @param method_name [String,Symbol] Method name
-  # @raise NoMethodError
+  # @raise ContextNoMethodError
   #   Is raised when no one of the contexts able to respond to the required method.
   # @return [Method]
   #
