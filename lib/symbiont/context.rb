@@ -6,7 +6,8 @@ module Symbiont
     # in many contexts to any object. Mixes up special methods that delegate execution logic to
     # to a special mediator object (`Symbiont::Executor`).
     #
-    # @param default_context_direction [Array<Symbol>] Delegation order `for Symbiont::Executor`.
+    # @param default_context_direction [Array<Symbol>]
+    #   Delegation order `for Symbiont::Executor`. Trigger::IOK is used by default.
     # @return [Module]
     #
     # @see Symbiont::Executor
@@ -40,9 +41,13 @@ module Symbiont
     # rubocop:enable Naming/MethodName
   end
 
+  # Default Context mixin that provides an ability to invoke procs and lambdas
+  # in many contexts to any object. Mixes up special methods that delegate execution logic to
+  # to a special mediator object (`Symbiont::Executor`). Uses Symbiont::Trigger::IOK delegation order.
+  #
   # @see Symbiont.Context
   #
   # @api public
   # @since 0.1.0
-  Context = Context()
+  Context = Context(Trigger::IOK)
 end

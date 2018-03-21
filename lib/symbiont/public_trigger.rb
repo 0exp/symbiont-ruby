@@ -4,6 +4,8 @@ module Symbiont
   # A trigger that considers only public methods of executable contexts
   # during method dispatching.
   #
+  # @see Symbiont::Trigger
+  #
   # @api private
   # @since 0.1.0
   class PublicTrigger < Trigger
