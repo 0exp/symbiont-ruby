@@ -404,7 +404,7 @@ Released under MIT License.
 
 # Authors
 
-Logo was created by Viktoria Karaulova (my special thanks ^_^).
+[Logo](https://github.com/0exp/symbiont-ruby/tree/master/logo) was created by **Viktoria Karaulova** (my special thanks ^_^).
 
-Project was created by Rustam Ibragimov.
+Project was created by **Rustam Ibragimov**.
 
