@@ -1,4 +1,12 @@
-# Symbiont &middot; [![Gem Version](https://badge.fury.io/rb/symbiont-ruby.svg)](https://badge.fury.io/rb/symbiont-ruby) [![Build Status](https://travis-ci.org/0exp/symbiont-ruby.svg?branch=master)](https://travis-ci.org/0exp/symbiont-ruby) [![Coverage Status](https://coveralls.io/repos/github/0exp/symbiont-ruby/badge.svg?branch=master)](https://coveralls.io/github/0exp/symbiont-ruby?branch=master)
+<p align="center"><img width="250" height="250" src="logo/symbiont_logo_circle.png" /></div>
+<p align="center">
+  <h1 align="center">
+    Symbiont<br />
+    <a href="https://badge.fury.io/rb/symbiont-ruby"><img src="https://badge.fury.io/rb/symbiont-ruby.svg"></a>
+    <a href="https://travis-ci.org/0exp/symbiont-ruby"><img src="https://travis-ci.org/0exp/symbiont-ruby.svg?branch=master"></a>
+    <a href="https://coveralls.io/github/0exp/symbiont-ruby?branch=master"><img src="https://coveralls.io/repos/github/0exp/symbiont-ruby/badge.svg?branch=master"></a>
+  </h1>
+</p>
 
 **Symbiont** is a cool implementation of proc-objects execution algorithm: in the context of other object,
 but with the preservation of the closed environment of the proc object and with the ability of control the method dispatch
@@ -365,7 +373,6 @@ The method will be addressed to the object that responds first (in accordance wi
 ```ruby
 # Usage:
 
-
 Symbiont::Executor.evaluate(object_a, object_b, context_direction: Symbiont::IOK, &closure)
 Symbiont::Executor.evaluate_private(object_a, object_b, context_direction: Symbiont::IOK, &closure)
 Symbiont::Executor.publc_method(:method_name, object_a, object_b, context_direction: Symbiont::IOK, &closure)
@@ -395,6 +402,9 @@ Symbiont::Executor.public_method(:info, object_a, object_b, &closure).call # => 
 
 Released under MIT License.
 
-# About
+# Authors
 
-Created by Rustam Ibragimov.
+Logo was created by Viktoria Karaulova (my special thanks ^_^).
+
+Project was created by Rustam Ibragimov.
+
