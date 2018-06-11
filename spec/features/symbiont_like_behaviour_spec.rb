@@ -114,7 +114,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'instance#evaluate => fails when proc isnt passed' do
       expect do
         instance_object.evaluate
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate_private => invokes private evaluator ' \
@@ -133,7 +133,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'instnace#evaluate_private => fails when proc isnt passed' do
       expect do
         instance_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate => invokes public evaluator ' \
@@ -152,7 +152,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate => fails when proc isnt passed' do
       expect do
         module_object.evaluate
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate_private => invokes private evaluator ' \
@@ -171,7 +171,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate_private => fails when proc isnt passed' do
       expect do
         module_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'module#public_method => resolves corresponding method ' \
@@ -264,25 +264,25 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
     specify 'module#evaluate fails when proc isnt possed' do
       expect do
         instance_object.evaluate
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'module#evaluate_private fails when proc isnt possed' do
       expect do
         instance_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate fails when proc isnt possed' do
       expect do
         module_object.evaluate
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
     specify 'instance#evaluate_private fails when proc isnt possed' do
       expect do
         module_object.evaluate_private
-      end.to raise_error(Symbiont::Trigger::UnprovidedClosureAttributeError)
+      end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
   end
 
