@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module Symbiont
+  # Special object that wraps your proc object from any place and provides
+  # an ability to invoke this proc object lazily inside an any series of contexts.
+  #
+  # @api public
+  # @since 0.3.0
   class Isolator
     # Is raised when closure is not provided.
     #
@@ -10,6 +15,8 @@ module Symbiont
     # @since 0.3.0
     UnprovidedClosureAttributeError = Class.new(ArgumentError)
 
+    # Instantiates isolator object with corresponding default direction and closure.
+    #
     # @option default_direction [Array<Symbol>]
     #   An array of symbols that represents the direction of contexts which is used as default
     #   context direction. Symbiont::Trigger::IOK is chosen by default.
