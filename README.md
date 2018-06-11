@@ -55,7 +55,7 @@ require 'symbiont'
     - [Mixing a module with default delegation direction](#mixing-a-module-with-default-delegation-direction)
     - [Mixing a module with certain delegation direction](#mixing-a-module-with-certain-delegation-direction)
   - [Multiple inner contexts](#multiple-inner-contexts)
-  - [Isolator - isolate your proc objects to be invoked lazily](#isolator-isolate-your-proc-objects-to-be-invoked-lazily)
+  - [Isolator - proc object isolation layer for delayed invocations](#isolator---proc-object-isolation-layer-for-delayed-invocations)
 
 # Problems and motivaiton
 
@@ -391,7 +391,7 @@ Symbiont::Executor.public_method(:data, object_a, object_b, &closure).call # => 
 Symbiont::Executor.public_method(:info, object_a, object_b, &closure).call # => "object_info"
 ```
 
-## Isolator - isolate your proc objects to be invoked lazily
+## Isolator - proc object isolation layer for delayed invocations
 
 `Symbiont::Isolator` is a special object that wraps your proc object from any place and provides
 an ability to invoke this proc object lazily inside an any series of contexts.
@@ -412,7 +412,7 @@ isolator.evaluate(object_a, object_b) # use default direction defined on instant
 isolator.evaluate(object_a, object_b, direction: Symbiont::KOI) # use custom direction
 # same for #.evaluate_private
 
-# gettint a method object
+# getting a method object
 isolator.public_method(:call_any_method, object_a, object_b) # use default direction defined on instantiation
 isolator.public_method(:call_any_method, object_a, object_b, direction: Symbiont::KIO) # use custom direction
 isolator.private_method(...)
