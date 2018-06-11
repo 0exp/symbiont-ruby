@@ -150,7 +150,7 @@ module Symbiont
     # @see Symbiont::PublicTrigger
     # @see Symbiont::Trigger
     #
-    # @api public
+    # @api private
     # @since 0.3.0
     def public_trigger(*required_contexts, direction: default_direction)
       PublicTrigger.new(*required_contexts, context_direction: direction, &closure)
@@ -176,7 +176,7 @@ module Symbiont
     # @see Symbiont::PrivateTrigger
     # @see Symbiont::Trigger
     #
-    # @api public
+    # @api private
     # @since 0.3.0
     def private_trigger(*required_contexts, direction: default_direction)
       PrivateTrigger.new(*required_contexts, context_direction: direction, &closure)
