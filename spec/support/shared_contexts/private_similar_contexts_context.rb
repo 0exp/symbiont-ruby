@@ -3,21 +3,21 @@
 shared_context 'private similar contexts' do
   let!(:object_class) do
     Class.new do
+      private
+
       def object_data
         'inner_data'
       end
-
-      private :object_data
     end
   end
 
   let!(:another_object_class) do
     Class.new do
+      private
+
       def object_info
         'inner_info'
       end
-
-      private :object_info
     end
   end
 

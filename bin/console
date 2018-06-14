@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'bundler/setup'
-require 'symbiont/ruby'
+require 'symbiont'
 
 require 'pry'
 Pry.start
