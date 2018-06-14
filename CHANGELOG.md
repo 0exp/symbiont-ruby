@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## [0.3.0] 2018-06-14
 ### Added
 - `Symbiont::Isolator` - proc object isolation layer for delayed invocations;
 
