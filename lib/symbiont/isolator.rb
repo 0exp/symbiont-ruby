@@ -15,6 +15,23 @@ module Symbiont
     # @since 0.3.0
     UnprovidedClosureAttributeError = Class.new(ArgumentError)
 
+    # Proc object that will be evaluated in many contexts: initial, outer and kernel.
+    # Will be used as an outer-context for the method resolution.
+    #
+    # @return [Proc]
+    #
+    # @api public
+    # @since 0.3.0
+    attr_reader :closure
+
+    # An array of symbols that represents the direction of contexts. Used by default.
+    #
+    # @return [Array<Symbol>]
+    #
+    # @api public
+    # @since 0.3.0
+    attr_reader :default_direction
+
     # Instantiates isolator object with corresponding default direction and closure.
     #
     # @option default_direction [Array<Symbol>]
@@ -112,23 +129,6 @@ module Symbiont
     end
 
     private
-
-    # Proc object that will be evaluated in many contexts: initial, outer and kernel.
-    # Will be used as an outer-context for the method resolution.
-    #
-    # @return [Proc]
-    #
-    # @api private
-    # @since 0.3.0
-    attr_reader :closure
-
-    # An array of symbols that represents the direction of contexts. Used by default.
-    #
-    # @return [Array<Symbol>]
-    #
-    # @api private
-    # @since 0.3.0
-    attr_reader :default_direction
 
     # Factory method that instantiates a public trigger with the desired execution context,
     # the direction of method dispatching and the closure that needs to be performed.
