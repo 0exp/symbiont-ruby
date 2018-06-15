@@ -9,6 +9,7 @@ module Symbiont
   require_relative 'symbiont/trigger'
   require_relative 'symbiont/public_trigger'
   require_relative 'symbiont/private_trigger'
+  require_relative 'symbiont/isolator'
   require_relative 'symbiont/executor'
   require_relative 'symbiont/context'
 

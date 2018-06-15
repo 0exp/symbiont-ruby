@@ -153,9 +153,11 @@ class Symbiont::Trigger < BasicObject
   # @api private
   # @since 0.1.0
   def initialize(*initial_contexts, context_direction: IOK, &closure)
+    # :nocov:
     unless ::Kernel.block_given?
       ::Kernel.raise(UnprovidedClosureAttributeError, 'block attribute should be provided')
     end
+    # :nocov:
 
     # rubocop:disable Layout/SpaceAroundKeyword
     unless(context_direction == IOK || context_direction == OIK || context_direction == OKI ||
@@ -230,7 +232,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api private
   # @since 0.1.0
-  def method_missing(method_name, *arguments, &block) # rubocop:disable Style/MethodMissing
+  def method_missing(method_name, *arguments, &block) # rubocop:disable Style/MethodMissingSuper
     __actual_context__(method_name).send(method_name, *arguments, &block)
   end
 
