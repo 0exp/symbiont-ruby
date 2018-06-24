@@ -9,6 +9,9 @@ AllCops:
     - lib/**/*
     - spec/**/*
     - bin/console
+    - Rakefile
+    - Gemfile
+    - symbiont-ruby.gemspec
 
 Metrics/LineLength:
   Max: 120
