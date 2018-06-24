@@ -98,7 +98,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
 
     include_examples 'symbiont direction option'
 
-    specify 'instance#evaluate => invokes public evaluator ' \
+    specify "instance#evaluate => invokes public evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
       expect(Symbiont::Executor).to(
@@ -117,7 +117,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
-    specify 'instance#evaluate_private => invokes private evaluator ' \
+    specify "instance#evaluate_private => invokes private evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
       expect(Symbiont::Executor).to(
@@ -136,7 +136,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
-    specify 'module#evaluate => invokes public evaluator ' \
+    specify "module#evaluate => invokes public evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
       expect(Symbiont::Executor).to(
@@ -155,7 +155,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
-    specify 'module#evaluate_private => invokes private evaluator ' \
+    specify "module#evaluate_private => invokes private evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
       expect(Symbiont::Executor).to(
@@ -174,7 +174,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
-    specify 'module#public_method => resolves corresponding method ' \
+    specify "module#public_method => resolves corresponding method " \
             "with #{symbiont_direction} direction" do
       corresponding_method = gen_symb
 
@@ -189,7 +189,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       module_object.public_method(corresponding_method, symbiont_direction) {}
     end
 
-    specify 'module#private_method => resolves corresponding method ' \
+    specify "module#private_method => resolves corresponding method " \
             "with #{symbiont_direction} direction" do
       corresponding_method = gen_symb
 
@@ -204,7 +204,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       module_object.private_method(corresponding_method, symbiont_direction) {}
     end
 
-    specify 'instance#public_method => resolves corresponding method ' \
+    specify "instance#public_method => resolves corresponding method " \
             "with #{symbiont_direction} direction" do
       corresponding_method = gen_symb
 
@@ -219,7 +219,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       instance_object.public_method(corresponding_method, symbiont_direction) {}
     end
 
-    specify 'instance#private_method => resolves corresponding method ' \
+    specify "instance#private_method => resolves corresponding method " \
             "with #{symbiont_direction} direction" do
       corresponding_method = gen_symb
 

@@ -1,125 +1,17 @@
-require: rubocop-rspec
+inherit_gem:
+  armitage-rubocop:
+    - lib/rubocop.general.yml
+    - lib/rubocop.rspec.yml
 
 AllCops:
-  DisplayCopNames:   true
-  DisplayStyleGuide: true
   TargetRubyVersion: 2.4.3
   Include:
-    - lib/**/*
-    - spec/**/*
-  Exclude:
-    - bin/**/*
-    - Gemfile
+    - lib/**/*.rb
+    - spec/**/*.rb
+    - bin/console
     - Rakefile
+    - Gemfile
     - symbiont-ruby.gemspec
-
-Style/SingleLineMethods:
-  Exclude:
-    - spec/**/*
-
-Style/RescueModifier:
-  Exclude:
-    - spec/**/*
-
-Style/AsciiComments:
-  Enabled: false
-
-Style/Alias:
-  Enabled: false
-
-Style/GuardClause:
-  Enabled: false
-
-Style/DoubleNegation:
-  Enabled: false
-
-Style/Documentation:
-  Enabled: false
-
-Style/ClassAndModuleChildren:
-  Enabled: false
-
-Style/IfUnlessModifier:
-  Enabled: false
-
-Style/EmptyCaseCondition:
-  Enabled: false
-
-Style/FrozenStringLiteralComment:
-  Enabled: true
-
-Style/InverseMethods:
-  Enabled: false
-
-Style/ParallelAssignment:
-  Enabled: false
-
-Style/CommentedKeyword:
-  Enabled: false
-
-Lint/HandleExceptions:
-  Enabled: false
-
-Layout/IndentArray:
-  Enabled: false
-
-Lint/AmbiguousRegexpLiteral:
-  Enabled: false
-
-Lint/UnusedMethodArgument:
-  Enabled: false
-
-Naming/FileName:
-  Enabled: false
-
-Naming/VariableNumber:
-  EnforcedStyle: snake_case
 
 Metrics/LineLength:
   Max: 120
-
-Metrics/BlockLength:
-  Exclude:
-    - spec/**/*
-
-Metrics/CyclomaticComplexity:
-  Max: 10
-
-Metrics/PerceivedComplexity:
-  Max: 10
-
-Metrics/MethodLength:
-  Max: 20
-
-RSpec/ContextWording:
-  Enabled: false
-
-RSpec/HookArgument:
-  Enabled: false
-
-RSpec/NestedGroups:
-  Max: 6
-
-RSpec/MessageSpies:
-  Enabled: false
-
-RSpec/ExampleLength:
-  Enabled: false
-
-RSpec/MultipleExpectations:
-  Enabled: false
-
-RSpec/DescribeClass:
-  Enabled: false
-
-RSpec/LetSetup:
-  Enabled: false
-
-RSpec/AnyInstance:
-  Enabled: false
-
-RSpec/MultipleSubjects:
-  Enabled: false
-
-RSpec/EmptyLineAfterSubject:
-  Enabled: false

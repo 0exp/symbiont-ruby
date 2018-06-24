@@ -22,7 +22,7 @@ task yardoc: :doc do
     puts 'YARD COVERAGE [SUCCESS] => 100% documentation coverage!'
   else
     failing_code_objects = undocumented_code_objects.map do |code_object|
-      "- #{code_object.class} => #{code_object.to_s}"
+      "- #{code_object.class} => #{code_object}"
     end.join("\n")
 
     abort("YARD COVERAGE [FAILURE] => No documentation found for: \n #{failing_code_objects}")

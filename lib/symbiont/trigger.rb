@@ -232,7 +232,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api private
   # @since 0.1.0
-  def method_missing(method_name, *arguments, &block) # rubocop:disable Style/MethodMissingSuper
+  def method_missing(method_name, *arguments, &block)
     __actual_context__(method_name).send(method_name, *arguments, &block)
   end
 
