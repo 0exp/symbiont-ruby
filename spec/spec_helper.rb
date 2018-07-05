@@ -20,8 +20,9 @@ require_relative 'support/spec_support'
 require_relative 'support/shared_contexts'
 
 RSpec.configure do |config|
-  config.order = :random
   config.expect_with(:rspec) { |c| c.syntax = :expect }
+  config.order = :random
+  Kernel.srand config.seed
 
   config.include SpecSupport::SymbiontHelpers
   config.include SpecSupport::FakeDataGenerator
