@@ -29,11 +29,11 @@ Gem::Specification.new do |spec|
     f.match(%r{^(spec|features)/})
   end
 
-  spec.add_development_dependency 'rspec',            '~> 3.7'
-  spec.add_development_dependency 'simplecov',        '~> 0.15'
+  spec.add_development_dependency 'rspec',            '~> 3.8'
+  spec.add_development_dependency 'simplecov',        '~> 0.16'
   spec.add_development_dependency 'simplecov-json',   '~> 0.2'
-  spec.add_development_dependency 'coveralls',        '~> 0.7'
-  spec.add_development_dependency 'armitage-rubocop', '~> 0.4'
+  spec.add_development_dependency 'coveralls',        '~> 0.8'
+  spec.add_development_dependency 'armitage-rubocop', '~> 0.5'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
