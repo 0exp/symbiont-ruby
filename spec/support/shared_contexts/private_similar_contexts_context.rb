@@ -47,17 +47,15 @@ shared_context 'private similar contexts' do
   end
 
   after do
-    begin
-      module Kernel
-        begin
-          undef object_data
-        rescue NameError # NOTE: it means that object_data is already removed/undefined
-        end
+    module Kernel
+      begin
+        undef object_data
+      rescue NameError # NOTE: it means that object_data is already removed/undefined
+      end
 
-        begin
-          undef object_info
-        rescue NameError # NOTE: it means that object_data is already removed/undefined
-        end
+      begin
+        undef object_info
+      rescue NameError # NOTE: it means that object_data is already removed/undefined
       end
     end
   end

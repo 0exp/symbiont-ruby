@@ -159,7 +159,7 @@ class Symbiont::Trigger < BasicObject
     end
     # :nocov:
 
-    # rubocop:disable Layout/SpaceAroundKeyword
+    # rubocop:disable Layout/SpaceAroundKeyword, Style/MultipleComparison
     unless(context_direction == IOK || context_direction == OIK || context_direction == OKI ||
            context_direction == IKO || context_direction == KOI || context_direction == KIO)
       ::Kernel.raise(
@@ -168,7 +168,7 @@ class Symbiont::Trigger < BasicObject
         'You should use one of this: OIK, OKI, IOK, IKO, KOI, KIO.'
       )
     end
-    # rubocop:enable Layout/SpaceAroundKeyword
+    # rubocop:enable Layout/SpaceAroundKeyword, Style/MultipleComparison
 
     @__closure__           = closure
     @__context_direction__ = context_direction
@@ -232,7 +232,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api private
   # @since 0.1.0
-  def method_missing(method_name, *arguments, &block) # rubocop:disable Style/MethodMissingSuper
+  def method_missing(method_name, *arguments, &block)
     __actual_context__(method_name).send(method_name, *arguments, &block)
   end
 
