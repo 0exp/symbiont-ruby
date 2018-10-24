@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
 require 'simplecov'
-require 'simplecov-json'
 require 'coveralls'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
-  SimpleCov::Formatter::JSONFormatter,
   Coveralls::SimpleCov::Formatter
 ])
 
@@ -20,8 +18,9 @@ require_relative 'support/spec_support'
 require_relative 'support/shared_contexts'
 
 RSpec.configure do |config|
-  config.order = :random
   config.expect_with(:rspec) { |c| c.syntax = :expect }
+  config.order = :random
+  Kernel.srand config.seed
 
   config.include SpecSupport::SymbiontHelpers
   config.include SpecSupport::FakeDataGenerator

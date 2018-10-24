@@ -1,14 +1,15 @@
 language: ruby
 rvm:
-- 2.2.10
 - 2.3.7
 - 2.4.4
 - 2.5.1
 - ruby-head
-
 sudo: false
 before_install: gem install bundler
 cache: bundler
 script:
-  - bundle exec rake yardoc
-  - bundle exec rspec
+- bundle exec rake yardoc
+- bundle exec rspec
+notifications:
+  slack:
+    secure: cACqAf+YIO1tYOtVf+6APagL8ug04Qm96nfNtEksSY9pmUu4g1Gy9PX4vO/E3CDEtog5OHVr1/iRUMIgNSIV0dGE4TOIL8ll9W2Foxbio/WsUoLQR5+YQdzCWhqaSfH0dhNXDYs8KwtHCyv1MpzFmfCSIZqZ9ajQMdxaCWaoqynult9xljWj8y8re2DLdUoGzWSKev6VL1CJcDC1RqKz42YfEuqPRg99VUKNFYvUotCAKfn5gqOC9g+zKNp9tfHSh9bicgjw9WPC3wL+gHb760eqH9jYPhWGPTz+XHrJlqKLN1oUOF3LLlqgtqmgjaUZq7LEbw9ARJgCYjSRB1Ywpa7VyavBuzByKV5dmcfmAwf2aLVkovzlTN+1qGR3T/qRFnAT6TPPdP7RkaEOvxhIQ/Cxsf4COp1Q0lsleitnOSMRtE6iwG2oYWjSI3PuGC4qkENH+91jyVYoLjE2c5CsQo/l181rt6T0p/uKc4Tze4UOBxryEThDfVsvOlmSrz40tvGrwHDYb4hsNzZBg3QdBjIlN3mxTvU1aZ+Hyj0ZxXDGZhJHP3zvXw0aU/vSN4hfs9FLpCUuTDA5R6vcHC2iQ479L/TWHhDG0t3jdy3vmVcT39zAj9Td2xaeJc90ZJGsLZch3tyY/wUVY4RCzdcD94075GX7EjD2S5+4dG5iSc4=

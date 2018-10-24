@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Changed
+- End of Ruby 2.2;
+
 ## [0.3.0] 2018-06-15
 ### Added
 - `Symbiont::Isolator` - proc object isolation layer for delayed invocations;
