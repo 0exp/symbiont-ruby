@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'symbiont/version'
 
 Gem::Specification.new do |spec|
-  spec.required_ruby_version = '>= 2.3.7'
+  spec.required_ruby_version = '>= 2.3.8'
 
   spec.name          = 'symbiont-ruby'
   spec.version       = Symbiont::VERSION
@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec',            '~> 3.8'
   spec.add_development_dependency 'simplecov',        '~> 0.16'
   spec.add_development_dependency 'coveralls',        '~> 0.8'
-  spec.add_development_dependency 'armitage-rubocop', '~> 0.10'
+  spec.add_development_dependency 'armitage-rubocop', '~> 0.12'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
