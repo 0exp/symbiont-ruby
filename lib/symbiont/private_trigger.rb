@@ -55,13 +55,17 @@ module Symbiont
     def method(method_name)
       __context__ = __actual_context__(method_name)
 
-      begin # NOTE: block is used cuz #__actual_context__ can raise NoMethodError too.
+      # NOTE:
+      #   block is used cuz #__actual_context__can raise
+      #   ::NoMethodError (ContextNoMethodError) too (and we should raise it).
+      begin
         __context__.method(method_name)
       rescue ::NoMethodError
         # NOTE:
         #   this situation is caused when the context object does not respond
         #   to #method method (BasicObject instances for example). We can extract
         #   method objects via it's singleton class.
+
         __context_singleton__ = __extract_singleton_object__(__context__)
         __context_singleton__.superclass.instance_method(method_name).bind(__context__)
       end

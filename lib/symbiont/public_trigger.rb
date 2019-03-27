@@ -53,7 +53,10 @@ module Symbiont
     def method(method_name)
       __context__ = __actual_context__(method_name)
 
-      begin # NOTE: block is used cuz #__actual_context__ can raise NoMethodError too.
+      # NOTE:
+      #   block is used cuz #__actual_context__can raise
+      #   ::NoMethodError (ContextNoMethodError) too (and we should raise it)
+      begin
         __context__.method(method_name)
       rescue ::NoMethodError
         # NOTE:
