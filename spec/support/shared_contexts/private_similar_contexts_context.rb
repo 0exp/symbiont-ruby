@@ -12,7 +12,7 @@ shared_context 'private similar contexts' do
   end
 
   let!(:another_object_class) do
-    Class.new do
+    Class.new(BasicObject) do
       private
 
       def object_info

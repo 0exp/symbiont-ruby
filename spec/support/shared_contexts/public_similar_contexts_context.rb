@@ -10,7 +10,7 @@ shared_context 'public similar contexts' do
   end
 
   let!(:another_object_class) do
-    Class.new do
+    Class.new(BasicObject) do
       def object_info
         'inner_info'
       end
