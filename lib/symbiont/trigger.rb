@@ -233,7 +233,7 @@ class Symbiont::Trigger < BasicObject
   # @api private
   # @since 0.1.0
   def method_missing(method_name, *arguments, &block)
-    __actual_context__(method_name).send(method_name, *arguments, &block)
+    __actual_context__(method_name).__send__(method_name, *arguments, &block)
   end
 
   # Checks that the actual context is able to respond to a required method.
@@ -255,7 +255,7 @@ class Symbiont::Trigger < BasicObject
   end
   # :nocov:
 
-  # Returns a corresponding metehod object of the actual context.
+  # Should return a corresponding method object of the actual context.
   #
   # @param method_name [String,Symbol] Method name
   # @raise ContextNoMethodError
@@ -266,9 +266,22 @@ class Symbiont::Trigger < BasicObject
   # @see #respond_to_missing?
   # @see #__actual_context__
   #
+  # @see [Symbiont::PrivateTrigget#method]
+  # @see [Symbiont::PublicTrigger#method]
+  #
   # @api private
   # @since 0.1.0
-  def method(method_name)
-    __actual_context__(method_name).method(method_name)
+  def method(method_name); end # :nocov:
+
+  # Returns an internal singleton object of the passed object.
+  #
+  # @param object [Any] Extractable object
+  # @return [Any] Singleton class of the passed object
+  #
+  # @api private
+  # @sionce 0.5.0
+  def __extract_singleton_object__(object)
+    # NOTE: `<<` approach is used cuz BasicObject does not support #singleton_class method.
+    class << object; self; end
   end
 end
