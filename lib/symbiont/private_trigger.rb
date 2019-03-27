@@ -48,7 +48,7 @@ module Symbiont
     # @param method_name [String,Symbol] Method name
     # @return [Method]
     #
-    # @see [Symbiont::Trigger#method]s
+    # @see [Symbiont::Trigger#method]
     #
     # @api private
     # @since 0.5.0

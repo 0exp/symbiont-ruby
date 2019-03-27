@@ -276,7 +276,7 @@ class Symbiont::Trigger < BasicObject
   # Returns an internal singleton object of the passed object.
   #
   # @param object [Any] Extractable object
-  # @return [Any] Singleton class of the passed object
+  # @return [Class] Singleton class of the passed object
   #
   # @api private
   # @sionce 0.5.0

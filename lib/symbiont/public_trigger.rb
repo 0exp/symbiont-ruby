@@ -30,8 +30,8 @@ module Symbiont
           context.respond_to?(method_name, false)
         rescue ::NoMethodError
           # NOTE:
-          #   this situation is caused when context object does not support
-          #   #resond_to? method (for example, BasicObject instances does not support this method)
+          #   this situation is caused when the context object does not respodond to
+          #   #resond_to? method (BasicObject instances for example)
 
           context_singleton = __extract_singleton_object__(context)
 
@@ -46,7 +46,7 @@ module Symbiont
     # @param method_name [String,Symbol] Method name
     # @return [Method]
     #
-    # @see [Symbiont::Trigger#method]s
+    # @see [Symbiont::Trigger#method]
     #
     # @api private
     # @since 0.5.0
