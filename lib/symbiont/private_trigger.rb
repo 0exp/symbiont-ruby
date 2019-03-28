@@ -33,12 +33,10 @@ module Symbiont
           #   this situation is caused when the context object does not respodond to
           #   #resond_to? method (BasicObject instances for example)
 
-          context_singleton = __extract_singleton_object__(context)
+          context_singleton = __extract_singleton_class__(context)
 
-          context_singleton.private_methods(true).include?(method_name) ||
-          context_singleton.methods(true).include?(method_name) ||
-          context_singleton.superclass.private_instance_methods(true).include?(method_name) ||
-          context_singleton.superclass.instance_methods(true).include?(method_name)
+          context_singleton.private_instance_methods(true).include?(method_name) ||
+          context_singleton.instance_methods(true).include?(method_name)
         end
       end || super
     end
@@ -66,8 +64,8 @@ module Symbiont
         #   to #method method (BasicObject instances for example). We can extract
         #   method objects via it's singleton class.
 
-        __context_singleton__ = __extract_singleton_object__(__context__)
-        __context_singleton__.superclass.instance_method(method_name).bind(__context__)
+        __context_singleton__ = __extract_singleton_class__(__context__)
+        __context_singleton__.instance_method(method_name).bind(__context__)
       end
     end
   end

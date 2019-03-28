@@ -33,10 +33,8 @@ module Symbiont
           #   this situation is caused when the context object does not respodond to
           #   #resond_to? method (BasicObject instances for example)
 
-          context_singleton = __extract_singleton_object__(context)
-
-          context_singleton.public_methods(false).include?(method_name) ||
-          context_singleton.superclass.public_instance_methods(false).include?(method_name)
+          context_singleton = __extract_singleton_class__(context)
+          context_singleton.public_instance_methods(true).include?(method_name)
         end
       end || super
     end
@@ -44,6 +42,8 @@ module Symbiont
     # Returns a corresponding public method object of the actual context.
     #
     # @param method_name [String,Symbol] Method name
+    # @raise [::NameError]
+    # @raise [Symbiont::Trigger::ContextNoMethodError, ::NoMethodError]
     # @return [Method]
     #
     # @see [Symbiont::Trigger#method]
@@ -64,8 +64,8 @@ module Symbiont
         #   to #method method (BasicObject instances for example). We can extract
         #   method objects via it's singleton class.
 
-        __context_singleton__ = __extract_singleton_object__(__context__)
-        __context_singleton__.superclass.public_instance_method(method_name).bind(__context__)
+        __context_singleton__ = __extract_singleton_class__(__context__)
+        __context_singleton__.public_instance_method(method_name).bind(__context__)
       end
     end
   end

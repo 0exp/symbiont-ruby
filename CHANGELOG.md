@@ -1,6 +1,11 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [0.6.0] 2018-03-28
+### Changed
+- Removed verbose code from `#__actual_context__` and `#method` methods of
+  `Symbiont::PublicTrigger` and `Symbiont::PrivateTrigger` classes.
+
 ## [0.5.0] 2018-03-28
 ### Added
 - Support for method dispatching for `BasicObject` instances (which does not support `#respond_to?` method);

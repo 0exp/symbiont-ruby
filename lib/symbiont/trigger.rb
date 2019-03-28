@@ -280,7 +280,7 @@ class Symbiont::Trigger < BasicObject
   #
   # @api private
   # @sionce 0.5.0
-  def __extract_singleton_object__(object)
+  def __extract_singleton_class__(object)
     # NOTE: `<<` approach is used cuz BasicObject does not support #singleton_class method.
     class << object; self; end
   end
