@@ -15,3 +15,6 @@ AllCops:
 
 Metrics/LineLength:
   Max: 120
+
+Style/RedundantBegin:
+  Enabled: false

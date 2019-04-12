@@ -36,7 +36,7 @@ module Symbiont
           context_singleton = __extract_singleton_class__(context)
 
           context_singleton.private_instance_methods(true).include?(method_name) ||
-          context_singleton.instance_methods(true).include?(method_name)
+            context_singleton.instance_methods(true).include?(method_name)
         end
       end || super
     end
