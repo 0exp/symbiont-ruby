@@ -100,7 +100,6 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
 
     specify "instance#evaluate => invokes public evaluator " \
             "with #{symbiont_direction} direction inside the self" do
-
       expect(Symbiont::Executor).to(
         receive(:evaluate).with(
           instance_object,
@@ -117,6 +116,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
+    # rubocop:disable Layout/EmptyLinesAroundBlockBody
     specify "instance#evaluate_private => invokes private evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
@@ -129,6 +129,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
 
       instance_object.evaluate_private {}
     end
+    # rubocop:enable Layout/EmptyLinesAroundBlockBody
 
     specify 'instnace#evaluate_private => fails when proc isnt passed' do
       expect do
@@ -136,6 +137,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
+    # rubocop:disable Layout/EmptyLinesAroundBlockBody
     specify "module#evaluate => invokes public evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
@@ -148,6 +150,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
 
       module_object.evaluate {}
     end
+    # rubocop:enable Layout/EmptyLinesAroundBlockBody
 
     specify 'module#evaluate => fails when proc isnt passed' do
       expect do
@@ -155,6 +158,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
       end.to raise_error(Symbiont::Isolator::UnprovidedClosureAttributeError)
     end
 
+    # rubocop:disable Layout/EmptyLinesAroundBlockBody
     specify "module#evaluate_private => invokes private evaluator " \
             "with #{symbiont_direction} direction inside the self" do
 
@@ -167,6 +171,7 @@ describe 'Symbiont: symbiont-like behaviour (by Symbiont::Context mixin)' do
 
       module_object.evaluate {}
     end
+    # rubocop:enable Layout/EmptyLinesAroundBlockBody
 
     specify 'module#evaluate_private => fails when proc isnt passed' do
       expect do
