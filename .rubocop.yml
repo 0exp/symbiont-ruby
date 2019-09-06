@@ -4,7 +4,7 @@ inherit_gem:
     - lib/rubocop.rspec.yml
 
 AllCops:
-  TargetRubyVersion: 2.6.3
+  TargetRubyVersion: 2.6.4
   Include:
     - lib/**/*.rb
     - spec/**/*.rb
@@ -17,4 +17,8 @@ Metrics/LineLength:
   Max: 120
 
 Style/RedundantBegin:
+  Enabled: false
+
+# NOTE: for code clarity in tests
+RSpec/LeakyConstantDeclaration:
   Enabled: false
