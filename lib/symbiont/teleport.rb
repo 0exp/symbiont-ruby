@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
-class Symbiont::Teleport
-  # TODO: fiber magic :O
+# Effect API research
+#
+# @api private
+# @since 0.7.0
+class Symbiont::Effect
+  # NOTE: fiber magic :)
 end
