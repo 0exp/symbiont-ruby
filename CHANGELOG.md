@@ -9,7 +9,7 @@ All notable changes to this project will be documented in this file.
 ## [0.5.0] 2018-03-28
 ### Added
 - Support for method dispatching for `BasicObject` instances (which does not support `#respond_to?` method);
-- Support for method extrancting for `BasicObject` instances (which does not support `#method` method);
+- Support for method extracting for `BasicObject` instances (which does not support `#method` method);
 - Updated development dependencies;
 - Support for `Ruby@2.6.2`, `Ruby@2.5.5`;
 
