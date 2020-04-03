@@ -9,9 +9,9 @@
 </p>
 
 **Symbiont** is a cool implementation of proc-objects execution algorithm: in the context of other object,
-but with the preservation of the closed environment of the proc object and with the ability of control the method dispatch
+but with the preservation of the captured environment of the proc object and with the ability of control the method dispatch
 inside it. A proc object is executed in three contexts: in the context of required object, in the context of
-a closed proc's environment and in the global (Kernel) context.
+a captured proc's environment and in the global (Kernel) context.
 
 # Installation
 
@@ -45,7 +45,7 @@ require 'symbiont'
 - [Usage](#usage)
   - [Context management](#context-management)
   - [Supported method delegation directions](#supported-methods-delegation-directions)
-  - [Proc object invokation](#proc-object-invokation)
+  - [Proc object invocation](#proc-object-invocation)
     - [Considering public methods only (.evaluate)](#considering-public-methods-only-evaluate)
     - [Considering private and public methods (.evaluate_private)](#considering-private-and-public-methods-evaluate_private)
   - [Getting method-objects (Method)](#getting-method-objects-method)
@@ -60,14 +60,14 @@ require 'symbiont'
 # Problems and motivaiton
 
 The main problem of `instance_eval` / `instance exec` / `class_eval` / `class_exec` is that the binding (self)
-inside a proc-objec is replaced with the object in where a proc object is executed. This allows you to delegate all methods closed by a proc to another object.
-But this leads to the fact that the proc object loses access to the original closed environment.
-Symbiont solves this problem by allowing to proc to be executed in the required context while maintaining access to the methods of the closed environemnt
+inside a proc-object is replaced with the object in where a proc object is executed. This allows you to delegate all methods captured by a proc to another object.
+But this leads to the fact that the proc object loses access to the original captured environment.
+Symbiont solves this problem by allowing the proc to be executed in the required context while maintaining access to the methods of the captured environment
 (including the global context).
 
 ---
 
-A prroblem with `instance_eval` / `instance_exec` / `class_eval` / `class_exec`:
+A problem with `instance_eval` / `instance_exec` / `class_eval` / `class_exec`:
 
 ```ruby
 class TableFactory
@@ -84,7 +84,7 @@ class Migration
   class << self
     def create_table(&block)
       TableFactory.new.tap do |table|
-        table.instance_eval(&block) # NOTE: closure invokation
+        table.instance_eval(&block) # NOTE: closure invocation
       end
     end
   end
@@ -117,7 +117,7 @@ class Migration
   class << self
     def create_table(&block)
       TableFactory.new.tap do |table|
-        Symbiont::Executor.evaluate(table, &block) # NOTE: intercept closure invokation by Symbiont
+        Symbiont::Executor.evaluate(table, &block) # NOTE: intercept closure invocation by Symbiont
       end
     end
   end
@@ -138,15 +138,15 @@ Proc-object is executed in three contexts at the same time:
 Methods (called internally) are delegated to the context that is first able to respond.
 The order of context selection depends on the corresponding context direction parameter.
 By default the delegation order is: object context => closure context => global context.
-If no context is able to respond to the method, an exception is thrown (`Symbiont::Trigger::ContextNoMethodError`).
-Symbiont can consider the visiblity of methods when executing.
+If no context is able to respond to the method, an exception is raised (`Symbiont::Trigger::ContextNoMethodError`).
+Symbiont can consider the visibility of methods when executing.
 
 
 # Usage
 
 ## Context management
 
-Imagine that in a real application we have the following gode and the corresponding closure:
+Imagine having the following code and the corresponding clojure in the real application:
 
 ```ruby
 def object_data
@@ -178,16 +178,15 @@ How a proc object will be processed, which context will be selected, how to make
 
 ## Supported methods delegation directions
 
-Delegation order is set by a constant and passed as a parameter in the execution of the proc
-and the generation of a special mixin module, allowing any class or instance to become a symbiont.
+Delegation order might be passed as a parameter to the proc execution
+and to the special mixin module, allowing any class or instance to become a symbiont.
 
-Supported contexts
+- Supported contexts:
+  - inner context - an object where proc is executed;
+  - outer context - external environment of the proc object;
+  - kernel context - global Kernel context.
 
-- inner context  - an object where proc is executed;
-- outer context  - external environment of the proc object;
-- kernel context - global Kernel context.
-
-Symbiont::IOK is chosen by default (`inner context => outer context => kernel context`)
+Symbiont::IOK is chosen by default (`inner context => outer context => kernel context`).
 
 ```ruby
 Symbiont::IOK # Inner Context  => Outer Context  => Kernel Context (DEFAULT)
@@ -198,7 +197,7 @@ Symbiont::KOI # Kernel Context => Outer Context  => Inner Context
 Symbiont::KIO # Kernel Context => Inner Context  => Outer Context
 ```
 
-## Proc object invokation
+## Proc object invocation
 
 `Symbiont::Executor` allows you to execute proc objects in two modes of the delegation:
 
@@ -207,11 +206,11 @@ Symbiont::KIO # Kernel Context => Inner Context  => Outer Context
 - public and private methods:
   - `evaluate_private(*required_contexts, [context_direction:], &closure)`
 
-If no context is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is thrown.
+If none of contexts is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is raised.
 
-In the case when an unsupported direction value is used - `Symbiont::Trigger::IncompatibleContextDirectionError` exception is thrown.
+In the case an unsupported direction value is used - `Symbiont::Trigger::IncompatibleContextDirectionError` exception is raised.
 
-If proc object isnt passed to the executor - `Symbiont::Trigger::UnprovidedClosureAttributeError` exception is thrown.
+If proc object isn't passed to the executor - `Symbiont::Trigger::UnprovidedClosureAttributeError` exception is raised.
 
 #### Considering public methods only (.evaluate)
 
@@ -266,9 +265,9 @@ end
 - public and private methods:
   - `private_method(method_name, *required_contexts, [context_direction:], &clojure)`
 
-If no context is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is thrown.
+If none of contexts is able to respond to the required method - `Symbiont::Trigger::ContextNoMethodError` exception is raised.
 
-In the case when an unsupported direction value is used - `Symbiont::Trigger::IncompatibleContextDirectionError` exception is thrown.
+In the case an unsupported direction value is used - `Symbiont::Trigger::IncompatibleContextDirectionError` exception is raised.
 
 #### Considering public methods only (.public_method)
 
@@ -306,7 +305,7 @@ Symbiont::Executor.private_method(:object_data, object, context_direction: Symbi
 
 `Symbiont::Context` is a mixin that allows any object to call proc objects in the context of itself as `Symbiont::Executor`.
 
-You can specify the default direction of the context delegation. `Symbiont::IOK` is used by default.
+You can specify the direction of the context delegation. `Symbiont::IOK` is used by default.
 
 #### Mixing a module with default delegation direction
 
@@ -369,7 +368,7 @@ SimpleObject.new.evaluate(Symbiont::IOK) { object_data }
 
 `Symbiont::Executor` allows you to work with multiple inner contexts (can receive a set of objects instead of the one main object).
 Each object will be used as an inner context in order they are passed.
-The method will be addressed to the object that responds first (in accordance with a chosen delegation order).
+The method will be addressed to the object that responds first (according to a chosen delegation order).
 
 ```ruby
 # Usage:
