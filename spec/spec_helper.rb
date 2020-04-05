@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require 'simplecov'
-require 'coveralls'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
-  SimpleCov::Formatter::HTMLFormatter,
-  Coveralls::SimpleCov::Formatter
-])
+SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
 
-SimpleCov.start { add_filter 'spec' }
+SimpleCov.start do
+  enable_coverage :branch
+  add_filter 'spec'
+end
 
 require 'bundler/setup'
 require 'symbiont'
