@@ -1,6 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+- Support for Ruby@2.7.1
+
 ## [0.6.0] 2018-03-28
 ### Changed
 - Removed verbose code from `#__actual_context__` and `#method` methods of
