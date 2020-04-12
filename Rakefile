@@ -2,7 +2,21 @@
 
 require 'bundler/gem_tasks'
 require 'rspec/core/rake_task'
+require 'rubocop'
+require 'rubocop/rake_task'
+require 'rubocop-rails'
+require 'rubocop-performance'
+require 'rubocop-rspec'
+require 'rubocop-rake'
 require 'yard'
+
+RuboCop::RakeTask.new(:rubocop) do |t|
+  config_path = File.expand_path(File.join('.rubocop.yml'), __dir__)
+  t.options = ['--config', config_path]
+  t.requires << 'rubocop-rspec'
+  t.requires << 'rubocop-performance'
+  t.requires << 'rubocop-rake'
+end
 
 RSpec::Core::RakeTask.new(:rspec)
 
@@ -13,6 +27,7 @@ end
 
 task default: :rspec
 
+desc 'Code documentation coverage check'
 task yardoc: :doc do
   undocumented_code_objects = YARD::Registry.tap(&:load).select do |code_object|
     code_object.docstring.empty?

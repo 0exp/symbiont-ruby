@@ -29,9 +29,9 @@ Gem::Specification.new do |spec|
     f.match(%r{^(spec|features)/})
   end
 
-  spec.add_development_dependency 'rspec',            '~> 3.8'
+  spec.add_development_dependency 'rspec',            '~> 3.9'
   spec.add_development_dependency 'simplecov',        '~> 0.18'
-  spec.add_development_dependency 'armitage-rubocop', '~> 0.80'
+  spec.add_development_dependency 'armitage-rubocop', '~> 0.81'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
