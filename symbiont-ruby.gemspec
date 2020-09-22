@@ -30,8 +30,8 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_development_dependency 'rspec',            '~> 3.9'
-  spec.add_development_dependency 'simplecov',        '~> 0.18'
-  spec.add_development_dependency 'armitage-rubocop', '~> 0.81'
+  spec.add_development_dependency 'simplecov',        '~> 0.19'
+  spec.add_development_dependency 'armitage-rubocop', '~> 0.91'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
