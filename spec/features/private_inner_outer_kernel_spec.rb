@@ -4,24 +4,24 @@ describe 'Symbiont: inner context (object) => outer context (proc) => kernel con
   include_context 'private similar contexts'
 
   specify 'private IOK resolution' do
-    closure = proc { object_data }
+    closure = proc { object_data(1, option: 2) }
 
     result = private_symbiont_eval(object, direction: Symbiont::IOK, &closure)
     method = private_symbiont_method(:object_data, object, direction: Symbiont::IOK, &closure)
-    expect(result).to      eq('inner_data')
-    expect(method.call).to eq('inner_data')
+    expect(result).to eq('inner_data')
+    expect(method.call(1, option: 2)).to eq('inner_data')
 
     object_class.send(:undef_method, :object_data)
     result = private_symbiont_eval(object, direction: Symbiont::IOK, &closure)
     method = private_symbiont_method(:object_data, object, direction: Symbiont::IOK, &closure)
-    expect(result).to      eq('outer_data')
-    expect(method.call).to eq('outer_data')
+    expect(result).to eq('outer_data')
+    expect(method.call(1, option: 2)).to eq('outer_data')
 
     undef object_data
     result = private_symbiont_eval(object, direction: Symbiont::IOK, &closure)
     method = private_symbiont_method(:object_data, object, direction: Symbiont::IOK, &closure)
-    expect(result).to      eq('kernel_data')
-    expect(method.call).to eq('kernel_data')
+    expect(result).to eq('kernel_data')
+    expect(method.call(1, option: 2)).to eq('kernel_data')
 
     ::Kernel.send(:undef_method, :object_data)
     expect do

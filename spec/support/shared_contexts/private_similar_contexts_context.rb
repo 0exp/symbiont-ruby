@@ -5,7 +5,7 @@ shared_context 'private similar contexts' do
     Class.new do
       private
 
-      def object_data
+      def object_data(arg, option:)
         'inner_data'
       end
     end
@@ -28,7 +28,7 @@ shared_context 'private similar contexts' do
     module Kernel
       private
 
-      def object_data
+      def object_data(arg, option:)
         'kernel_data'
       end
     end
@@ -36,7 +36,7 @@ shared_context 'private similar contexts' do
     class << self
       private
 
-      def object_data
+      def object_data(arg, option:)
         'outer_data'
       end
 
