@@ -418,6 +418,12 @@ isolator.private_method(...)
 # same for #.private_method
 ```
 
+# Roadmap
+
+- support for toplevel context (`TOPLEVEL_BINDING`);
+- `fiber teleoprts`;
+- official support for **Ruby@3**;
+
 # Contributing
 
 - Fork it ( https://github.com/0exp/symbiont-ruby/fork )
