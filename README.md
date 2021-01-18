@@ -421,7 +421,7 @@ isolator.private_method(...)
 # Roadmap
 
 - support for toplevel context (`TOPLEVEL_BINDING`);
-- `fiber teleoprts`;
+- `fiber teleports`;
 - official support for **Ruby@3**;
 
 # Contributing
