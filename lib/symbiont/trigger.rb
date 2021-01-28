@@ -4,11 +4,12 @@
 # Responsible for dispatching the methods which should be executed in a certain context.
 # Delegation variations depends on the order of contexts.
 #
-# Trigger supports 3 contexts:
+# Trigger supports 4 contexts:
 #
 # * closure context;
 # * passed object's context (or context of the each passed object);
-# * global ::Kernel context.
+# * global ::Kernel context;
+# * global TOPLEVEL_BINDING context;
 #
 # If no context is able to respond to the required method - ContextNoMethodError exception is raised
 # (ContextNoMethodError inherits from NoMethodError).
@@ -16,14 +17,33 @@
 # @api private
 # @since 0.1.0
 class Symbiont::Trigger < BasicObject
-  # Indicates the direction of context method resolving algorithm.
-  # Direction: initial context => outer context => kernel context.
+  # Indicates the direction of context method resolving algorithm. Direction:
+  # => initial context => outer context => kernel context => toplevel context.
   #
   # @return [Array<Symbol>]
   #
   # @api public
   # @since 0.1.0
-  IOK = %i[__inner_contexts__ __outer_context__ __kernel_context__].freeze
+  IOKT = %i[
+    __inner_contexts__
+    __outer_context__
+    __kernel_context__
+    __toplevel_context
+  ].freeze
+
+  # Indicates the direction of context method resolving algorithm. Direction:
+  # => initial context => outer context => toplevel context => kernel context.
+  #
+  # @return [Array<Symbol>]
+  #
+  # @api public
+  # @since 0.1.0
+  IOTK = %i[
+    __inner_contexts__
+    __outer_context__
+    __toplevel_context
+    __kernel_context__
+  ].freeze
 
   # Indicates the direction of context method resolving algorithm.
   # Direction: outer context => initial contexts => kernel context.
