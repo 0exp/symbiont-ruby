@@ -4,7 +4,7 @@ inherit_gem:
     - lib/rubocop.rspec.yml
 
 AllCops:
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 3.0.0
   Include:
     - lib/**/*.rb
     - spec/**/*.rb
@@ -15,6 +15,11 @@ AllCops:
 
 Layout/LineLength:
   Max: 120
+
+# NOTE: for code examples in tests
+Lint/EmptyBlock:
+  Exclude:
+    - spec/**/*.rb
 
 Style/RedundantBegin:
   Enabled: false

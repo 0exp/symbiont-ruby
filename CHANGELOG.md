@@ -3,10 +3,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 ### Added
-- Support for Ruby@2.7.1;
+- Support for Ruby@2.7.2, Ruby@3.0.0;
 
 ### Changed
 - No more `TravisCI` (TODO: migrate to `Github Actions`);
+- Updated development dependencies;
 
 ## [0.6.0] 2018-03-28
 ### Changed
