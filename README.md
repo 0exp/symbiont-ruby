@@ -424,6 +424,14 @@ isolator.private_method(...)
 - `fiber teleports`;
 - official support for **Ruby@3**;
 
+# Build
+
+```shell
+bundle exec rake rubocop
+bundle exec rake yardoc
+bundle exec rake rspec
+```
+
 # Contributing
 
 - Fork it ( https://github.com/0exp/symbiont-ruby/fork )
