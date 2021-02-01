@@ -3,8 +3,6 @@
   <h1 align="center">
     Symbiont<br />
     <a href="https://badge.fury.io/rb/symbiont-ruby"><img src="https://badge.fury.io/rb/symbiont-ruby.svg"></a>
-    <a href="https://travis-ci.org/0exp/symbiont-ruby"><img src="https://travis-ci.org/0exp/symbiont-ruby.svg?branch=master"></a>
-    <a href="https://coveralls.io/github/0exp/symbiont-ruby?branch=master"><img src="https://coveralls.io/repos/github/0exp/symbiont-ruby/badge.svg?branch=master"></a>
   </h1>
 </p>
 
