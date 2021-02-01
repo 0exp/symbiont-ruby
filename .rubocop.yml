@@ -12,6 +12,7 @@ AllCops:
     - Rakefile
     - Gemfile
     - symbiont-ruby.gemspec
+    - Steepfile
 
 Layout/LineLength:
   Max: 120

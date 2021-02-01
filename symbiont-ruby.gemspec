@@ -32,6 +32,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec',            '~> 3.10'
   spec.add_development_dependency 'simplecov',        '~> 0.21'
   spec.add_development_dependency 'armitage-rubocop', '~> 1.8'
+  spec.add_development_dependency 'rbs',              '~> 1.0'
+  spec.add_development_dependency 'typeprof',         '~> 0.12'
+  spec.add_development_dependency 'steep',            '~> 0.40'
 
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rake'
