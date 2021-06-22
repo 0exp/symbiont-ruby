@@ -1,7 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [0.7.0] 2021-06-22
 ### Added
 - Support for Ruby@2.7.2, Ruby@3.0.0;
 
