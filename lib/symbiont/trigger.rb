@@ -232,8 +232,8 @@ class Symbiont::Trigger < BasicObject
   #
   # @api private
   # @since 0.1.0
-  def method_missing(method_name, *arguments, &block)
-    __actual_context__(method_name).__send__(method_name, *arguments, &block)
+  def method_missing(method_name, *arguments, **options, &block)
+    __actual_context__(method_name).__send__(method_name, *arguments, **options, &block)
   end
 
   # Checks that the actual context is able to respond to a required method.

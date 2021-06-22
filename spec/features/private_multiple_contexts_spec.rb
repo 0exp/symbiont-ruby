@@ -4,7 +4,7 @@ describe 'Symbiont: private multiple contexts' do
   include_context 'private similar contexts'
 
   specify 'corresponding method resolution' do
-    closure = proc { "#{object_data} #{object_info}" }
+    closure = proc { "#{object_data(1, option: 2)} #{object_info}" }
 
     ::Kernel.send(:undef_method, :object_data) rescue nil
     ::Kernel.send(:undef_method, :object_info) rescue nil
@@ -13,7 +13,7 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::IOK, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::IOK, &closure)
-    expect(data_method.call).to eq('inner_data')
+    expect(data_method.call(1, option: 2)).to eq('inner_data')
     expect(info_method.call).to eq('inner_info')
 
     result = private_symbiont_eval(object, another_object, direction: Symbiont::OIK, &closure)
@@ -21,13 +21,13 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::OIK, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::OIK, &closure)
-    expect(data_method.call).to eq('outer_data')
+    expect(data_method.call(1, option: 2)).to eq('outer_data')
     expect(info_method.call).to eq('outer_info')
 
     module Kernel
       private
 
-      def object_data
+      def object_data(arg, option:)
         'kernel_data'
       end
 
@@ -40,7 +40,7 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::KIO, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::KIO, &closure)
-    expect(data_method.call).to eq('kernel_data')
+    expect(data_method.call(1, option: 2)).to eq('kernel_data')
     expect(info_method.call).to eq('kernel_info')
 
     ::Kernel.send(:undef_method, :object_data)
@@ -49,7 +49,7 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::KIO, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::KIO, &closure)
-    expect(data_method.call).to eq('inner_data')
+    expect(data_method.call(1, option: 2)).to eq('inner_data')
     expect(info_method.call).to eq('kernel_info')
 
     ::Kernel.send(:undef_method, :object_info)
@@ -59,7 +59,7 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::KOI, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::KOI, &closure)
-    expect(data_method.call).to eq('outer_data')
+    expect(data_method.call(1, option: 2)).to eq('outer_data')
     expect(info_method.call).to eq('inner_info')
 
     undef object_data
@@ -68,7 +68,7 @@ describe 'Symbiont: private multiple contexts' do
 
     data_method = private_symbiont_method(:object_data, object, another_object, direction: Symbiont::KIO, &closure)
     info_method = private_symbiont_method(:object_info, object, another_object, direction: Symbiont::KIO, &closure)
-    expect(data_method.call).to eq('inner_data')
+    expect(data_method.call(1, option: 2)).to eq('inner_data')
     expect(info_method.call).to eq('inner_info')
 
     object_class.send(:undef_method, :object_data)
